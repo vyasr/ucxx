@@ -68,6 +68,12 @@ message(VERBOSE "UCXX: RMM_LOGGING_LEVEL = '${RMM_LOGGING_LEVEL}'.")
 # ##################################################################################################
 # * conda environment -----------------------------------------------------------------------------
 rapids_cmake_support_conda_env(conda_env MODIFY_PREFIX_PATH)
+# See https://github.com/rapidsai/rapids-cmake/issues/176
+if(NOT BUILD_SHARED_LIBS)
+  if(TARGET conda_env)
+    install(TARGETS conda_env EXPORT ucxx-exports)
+  endif()
+endif()
 
 # ##################################################################################################
 # * compiler options ------------------------------------------------------------------------------
